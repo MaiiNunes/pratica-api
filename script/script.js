@@ -1,40 +1,55 @@
-
-async function getContent() {
+async function getContent(endpoint) {
     try { 
-        const xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                const res = JSON.parse(xhr.responseText);
-                console.log(res);
-
-                Object.entries(res).forEach((entry) => {
-                    const [key, value] = entry;
-                    Object.entries(value).forEach((entry) => {
-                        const [key2, value2] = entry;
-                        console.log(`${key2}: ${value2}`);
-                    });
-                });
-            }
-        };
-        xhr.open('GET', 'http://brhost.ovh:8888/tasks', true);
-        xhr.setRequestHeader('Accept', 'application/json');
-        xhr.send(null); 
-
+        fetch(`http://brhost.ovh:8888/${endpoint}`,
+                {
+                    method: "GET", 
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }
+            ).then(response => response.json()).then(data => {
+                return data
+            })
     }catch(error) {
-        console.error(error)
+        console.error(error);
     }
-
 }
-getContent() /***/ 
+data_clients = getContent('clients')
+data_tasks = getContent('tasks')
 
-/**
-function show(tasks){
+await show(data_clients)
+/** mesclar*/
+ 
+function show(data){
     let output = ''
 
-    for(let task of tasks){
-        console.log(task)
+    for(let dados of Object.values(data)){
+        output += 
+            ` <tr> Nome completo: 
+                    <td> ${dados.name} ${dados.surname} </td>
+                </tr><br>
+
+                <tr>
+                    <td> Birthday:${dados.birthday}</td><br>
+                    <td> CPF: ${dados.cpf}</td><br>
+                    <td> Telefone: ${dados.phone_number}</td><br>
+                    <td> E-mail: ${dados.email}</td>
+                </tr><br>
+                <br>
+
+                <tr> Cliente: 
+                        <td> ${dados.name} ${dados.surname} </td>
+                    </tr><br>
+
+                    <tr>
+                        <td> Tarefa: ${dados.desc}</td><br>
+                        <td> Status: ${dados.status}</td><br>
+                        <td> Data: Início ${dados.start_date} / Vencimento ${dados.due_date} </td><br>
+                    </tr><br>
+                    <br>
+            `
     }
 
-    document.querySelector('main').innerHTML = output
+    document.querySelector('section').innerHTML = output
 }
-*/ 

@@ -21,6 +21,7 @@ data_tasks = getContent('tasks')
 await show(data_clients)
 /** mesclar*/
  
+
 function show(data){
     let output = ''
 

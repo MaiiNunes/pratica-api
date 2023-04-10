@@ -1,6 +1,6 @@
 async function getContent(endpoint) {
     try { 
-        fetch(`http://brhost.ovh:8888/${endpoint}`,
+        await fetch(`http://brhost.ovh:8888/${endpoint}`,
                 {
                     method: "GET", 
                     mode: 'cors',
@@ -15,42 +15,50 @@ async function getContent(endpoint) {
         console.error(error);
     }
 }
- getContent('clients')
- getContent('tasks')
 
-/**await show(data_clients)
-/** mesclar*/
- 
+async function run(){
+    await getContent('clients')
+    await getContent('tasks')
+}
+run()
 
+
+let output = ''
 function show(data){
-    let output = ''
-
+    
     for(let dados of Object.values(data)){
-        output += 
-            ` <tr> Nome completo: 
-                    <td> ${dados.name} ${dados.surname} </td>
+        if(dados.task_id){
+            output = 
+            `   <tr> 
+                    <h4>Tasks: </h4>
+                    <td> Descrição: ${dados.desc}</td><br>
+                    <td> Status: ${dados.status}</td><br>
+                    <td> Data: Início ${dados.start_date} / Vencimento ${dados.due_date} </td>
                 </tr><br>
+            `
+            document.getElementById('Tarefa'+dados.name).innerHTML += output
+            continue
+        } else {
+            output = 
+            `   
+            <div id=${dados.name}>
 
-                <tr>
+
+                <tr> 
+                    <p>-----------------------------------------------------------------------------------</p>
+                    <td> Nome: ${dados.name} ${dados.surname}</td><br>
                     <td> Birthday:${dados.birthday}</td><br>
                     <td> CPF: ${dados.cpf}</td><br>
                     <td> Telefone: ${dados.phone_number}</td><br>
-                    <td> E-mail: ${dados.email}</td>
-                </tr><br>
-                <br>
-
-                <tr> Cliente: 
-                        <td> ${dados.name} ${dados.surname} </td>
-                    </tr><br>
-
-                    <tr>
-                        <td> Tarefa: ${dados.desc}</td><br>
-                        <td> Status: ${dados.status}</td><br>
-                        <td> Data: Início ${dados.start_date} / Vencimento ${dados.due_date} </td><br>
-                    </tr><br>
-                    <br>
+                    <td> E-mail: ${dados.email}</td><br>
+                    <div id='Tarefa${dados.name}'>
+                        <h4>Tasks: </h4>
+                        Sem tasks!
+                    <div>
+                </tr>
+            </div>
             `
-    }
-
-    document.querySelector('section').innerHTML = output
+            document.querySelector('section').innerHTML += output
+        }
+    }    
 }

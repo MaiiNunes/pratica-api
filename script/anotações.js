@@ -24,18 +24,16 @@ async function getContent(endpoint) {
 }
 getContent('clients') 
 getContent('tasks')
-
+let output = ''             //variavel global é output
 
 function show(data){
-    let output = ''             //variavel é output
-
+    
     for(let dados of Object.values(data)){                      //para cada variavel dados de objetos.values(objeto como o dado vem/ value são os dados) mostre data(dados)
-        output += `<ul>${dados.name} ${dados.surname}</ul>      //variavel output atribui em uma lista o dado name
-            <li> CPF: ${dados.cpf}</li>
+        output += `<tr><td> Nome: ${dados.name} ${dados.surname}</td><br>      //variavel output atribui em uma tabela o dado name
         `
     }
 
-    document.querySelector('main').innerHTML = output         //no documento html na main aprensente as informações do output
+    document.querySelector('section').innerHTML = output         //no documento html na section aprensente as informações do output
 }
 ------------------------------------------------------------------------*/ 
 

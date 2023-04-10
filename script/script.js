@@ -9,16 +9,16 @@ async function getContent(endpoint) {
                     }
                 }
             ).then(response => response.json()).then(data => {
-                return data
+                show(data)
             })
     }catch(error) {
         console.error(error);
     }
 }
-data_clients = getContent('clients')
-data_tasks = getContent('tasks')
+ getContent('clients')
+ getContent('tasks')
 
-await show(data_clients)
+/**await show(data_clients)
 /** mesclar*/
  
 

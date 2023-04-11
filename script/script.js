@@ -36,14 +36,26 @@ function show(data){
                     <td> Data: Início ${dados.start_date} / Vencimento ${dados.due_date} </td>
                 </tr><br>
             `
-            document.getElementById('Tarefa'+dados.name).innerHTML += output
+            document.getElementById(dados.name).innerHTML += output
             continue
-        } else {
+
+        } else if(dados.task_id = null){ //concertar
+            output = 
+            `   
+            <tr> 
+                <div id='tarefa${dados.name}'>
+                    <h4>Tasks: </h4>
+                    Sem tasks!
+                <div>
+            </tr>
+            `
+            document.getElementById(dados.name).innerHTML += output
+            continue
+
+        }else {
             output = 
             `   
             <div id=${dados.name}>
-
-
                 <tr> 
                     <p>-----------------------------------------------------------------------------------</p>
                     <td> Nome: ${dados.name} ${dados.surname}</td><br>
@@ -51,10 +63,6 @@ function show(data){
                     <td> CPF: ${dados.cpf}</td><br>
                     <td> Telefone: ${dados.phone_number}</td><br>
                     <td> E-mail: ${dados.email}</td><br>
-                    <div id='Tarefa${dados.name}'>
-                        <h4>Tasks: </h4>
-                        Sem tasks!
-                    <div>
                 </tr>
             </div>
             `

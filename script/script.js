@@ -25,8 +25,9 @@ run()
 
 let output = ''
 function show(data){
-    
-    for(let dados of Object.values(data)){
+    let dadosTasks = Object.values(data);
+    for(let dados of dadosTasks){
+        console.log('esse:'+ dados.task_id)
         if(dados.task_id){
             output = 
             `   <tr> 
@@ -39,7 +40,7 @@ function show(data){
             document.getElementById(dados.name).innerHTML += output
             continue
 
-        } else if(dados.task_id = null){ //concertar
+        } else if(dados.task_id = undefined){ //concertar
             output = 
             `   
             <tr> 
